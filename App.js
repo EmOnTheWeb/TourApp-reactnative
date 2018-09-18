@@ -1,49 +1,16 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableHighlight, FlatList } from 'react-native';
 
-export default class App extends React.Component {
-  render() {
-    return (
-       <View style={styles.container}>
-          <Text style={styles.titleText}>Central London</Text>
-          <Image
-            source={require('./imgs/Central-London.png')} 
-            style={styles.image}
-          />
-        <TouchableHighlight
-         style={styles.button}
-        >
-         <Text style={styles.text}>Start walk</Text>
-        </TouchableHighlight> 
-      </View>
-    );
-  }
-}
-
-class MyListItem extends React.PureComponent {
-  _onPress = () => {
-    this.props.onPressItem(this.props.id);
-  };
-
-  render() {
-    const textColor = this.props.selected ? "red" : "black";
-    return (
-       <View style={styles.container}>
-          <Text style={styles.titleText}>Central London</Text>
-          <Image
-            source={require('./imgs/Central-London.png')} 
-            style={styles.image}
-          />
-        <TouchableHighlight
-         style={styles.button}
-        >
-         <Text style={styles.text}>Start walk</Text>
-        </TouchableHighlight> 
-      </View>
-    );
-  }
-}
-
+const list = [
+        {
+            key: 0,
+            name: 'Amy Farha'     
+        },
+        {
+            key:1,
+            name: 'Chris Jackson'
+        }
+    ]; 
 
 const styles = StyleSheet.create({
   container: {
@@ -74,3 +41,41 @@ const styles = StyleSheet.create({
     alignSelf:'flex-start'
   }
 });
+
+export default class App extends React.Component {
+  
+  
+
+    renderRow ({ item }) {
+        return (
+        <View>
+             <Text style={styles.titleText}>Central London</Text>
+          <Image
+            source={require('./imgs/Central-London.png')} 
+            style={styles.image}
+          />
+        <TouchableHighlight
+         style={styles.button}
+        >
+         <Text style={styles.text}>Start walk</Text>
+        </TouchableHighlight> 
+       </View> )
+    }
+
+
+    render () {
+        return (
+           <View style={styles.container}> 
+              <FlatList
+                data={list}
+                renderItem={this.renderRow}
+              />
+           </View>
+        )
+    }
+}
+
+
+
+
+
