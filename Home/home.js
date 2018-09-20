@@ -1,4 +1,5 @@
 import React from 'react';
+import { createStackNavigator } from 'react-navigation'; 
 import { StyleSheet, Text, View, Image, TouchableHighlight, FlatList } from 'react-native';
 
 const list = [
@@ -13,6 +14,11 @@ const list = [
     ]; 
 
 class HomePage extends React.Component {
+
+	constructor(props) {
+    	super(props);
+    	navigator= this.props.navigation; 
+  	}
   
     renderRow ({ item }) {
         return (
@@ -22,11 +28,12 @@ class HomePage extends React.Component {
             source={item.image}
             style={styles.image}
         />
-        <TouchableHighlight
-         style={styles.button}
-        >
-         <Text style={styles.text}>Start walk</Text>
-        </TouchableHighlight> 
+	        <TouchableHighlight
+	         	style={styles.button}
+	         	onPress={() => navigator.navigate('Walk')}
+	        >
+	         	<Text style={styles.text}>Start walk</Text>
+	        </TouchableHighlight> 
         </View> )
     }
 
@@ -37,6 +44,7 @@ class HomePage extends React.Component {
                 data={list}
                 renderItem={this.renderRow}
                 keyExtractor={item => item.name}
+                navigation={this.props.navigation}
               />
            </View>
         )
