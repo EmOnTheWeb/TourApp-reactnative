@@ -3,12 +3,12 @@ import { StyleSheet, Text, View, Image, TouchableHighlight, FlatList } from 'rea
 
 const list = [
         {
-            key: 0,
-            name: 'Amy Farha'     
+            name: 'Central London',
+            image: require('../imgs/Central-London.png')    
         },
         {
-            key:1,
-            name: 'Chris Jackson'
+            name: 'East London',
+            image: require('../imgs/Central-London.png')
         }
     ]; 
 
@@ -16,10 +16,10 @@ class HomePage extends React.Component {
   
     renderRow ({ item }) {
         return (
-        <View>
-            <Text style={styles.titleText}>Central London</Text>
+        <View style={styles.container}>
+            <Text style={styles.titleText}>{item.name}</Text>
             <Image
-            source={require('../imgs/Central-London.png')} 
+            source={item.image}
             style={styles.image}
         />
         <TouchableHighlight
@@ -36,6 +36,7 @@ class HomePage extends React.Component {
               <FlatList horizontal 
                 data={list}
                 renderItem={this.renderRow}
+                keyExtractor={item => item.name}
               />
            </View>
         )
@@ -51,7 +52,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     image: {
-        width:'95%',
+      
     }, 
     button: {
         alignItems: 'center',
