@@ -6,10 +6,14 @@ import { StyleSheet, Text, View, Image, TouchableHighlight, FlatList } from 'rea
 class WalkPage extends React.Component {
 
     render () {
+
+        const { navigation } = this.props; 
+        const walkName = navigation.getParam('walkName'); 
+
         return (
         	<View style={styles.container}>
 	            <Text> 
-	               Hello
+	               {walkName}
 	            </Text>
 	        </View>
         )

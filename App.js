@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from 'react-navigation';
-import HomePage from './Home/home'; 
-import WalkPage from './Walk/walk'; 
+import HomePage from './HomePage/home'; 
+import WalkPage from './WalkPage/walk'; 
 
 const RootStack = createStackNavigator(
     {

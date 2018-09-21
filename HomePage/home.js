@@ -25,12 +25,15 @@ class HomePage extends React.Component {
         <View style={styles.container}>
             <Text style={styles.titleText}>{item.name}</Text>
             <Image
-            source={item.image}
-            style={styles.image}
-        />
+	            source={item.image}
+	            style={styles.image}
+        	/>
 	        <TouchableHighlight
 	         	style={styles.button}
-	         	onPress={() => navigator.navigate('Walk')}
+	         	onPress={() => navigator.navigate('Walk', {
+                        walkName:item.name
+                    })
+                }
 	        >
 	         	<Text style={styles.text}>Start walk</Text>
 	        </TouchableHighlight> 
