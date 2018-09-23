@@ -5,18 +5,27 @@ import coordinates from '../coordinates';
 
 class WalkMap extends React.Component {
 
-    componentWillMount() {
+    constructor(props) {
+
+        super(props); 
+
+        let coordinates = this.getWalkCoordinates();
+
+        let origin = coordinates[0];  
+        this.state = { origin }
+        console.log(this.state.origin); 
+    }
+
+    getWalkCoordinates() {
 
         let walkName = this.props.name; 
         let folderName = walkName.replace(' ','_').toLowerCase(); 
 
-        let walkCoordinates = coordinates[folderName]; 
-        console.log(walkCoordinates); 
+        return coordinates[folderName]; 
+        
     }
 
     render() {
-
-           
 
         return (
             <View></View>
