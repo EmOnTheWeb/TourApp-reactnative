@@ -2,6 +2,7 @@ import React from 'react';
 import { createStackNavigator } from 'react-navigation';
 import { StyleSheet, Text, View, Image, TouchableHighlight, FlatList } from 'react-native';
 import coordinates from '../coordinates'; 
+import MapView from 'react-native-maps';
 
 class WalkMap extends React.Component {
 
@@ -28,7 +29,16 @@ class WalkMap extends React.Component {
     render() {
 
         return (
-            <View></View>
+            <View style={styles.container}><MapView style={styles.container} 
+    initialRegion={{
+      latitude: 37.78825,
+      longitude: -122.4324,
+      latitudeDelta: 0.0922,
+      longitudeDelta: 0.0421,
+    }}
+  /><Text> 
+                  hihi
+                </Text></View>
         )
     }
 }
