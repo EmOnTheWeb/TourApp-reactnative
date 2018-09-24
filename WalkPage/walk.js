@@ -65,6 +65,9 @@ class WalkMap extends React.Component {
                     origin={segmentOrigin}
                     destination={segmentDestination}
                     apikey={DIRECTIONS_API_KEY}
+                    mode="walking"
+                    strokeWidth={3}
+                    strokeColor="hotpink"
                 />
             </MapView> 
         );
