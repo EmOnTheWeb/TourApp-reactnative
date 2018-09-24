@@ -5,11 +5,11 @@ import { StyleSheet, Text, View, Image, TouchableHighlight, FlatList } from 'rea
 const list = [
         {
             name: 'Central London',
-            image: require('../imgs/Central-London.png')    
+            image: require('../assets/imgs/Central-London.png')    
         },
         {
             name: 'East London',
-            image: require('../imgs/Central-London.png')
+            image: require('../assets/imgs/Central-London.png')
         }
     ]; 
 
