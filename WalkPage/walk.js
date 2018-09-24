@@ -2,7 +2,7 @@ import React from 'react';
 import { createStackNavigator } from 'react-navigation';
 import { StyleSheet, Text, View, Image, TouchableHighlight, FlatList } from 'react-native';
 import coordinates from '../coordinates'; 
-import { MapView } from 'expo';
+import { MapView , Location, Permissions } from 'expo';
 import MapViewDirections from 'react-native-maps-directions';
 
 class WalkMap extends React.Component {
@@ -76,16 +76,61 @@ class WalkMap extends React.Component {
 
 class WalkPage extends React.Component {
 
+
+    state = {
+        location: null,
+        errorMessage: null,
+    };
+
+    componentWillMount() {
+
+        this.getLocationAsync();
+        
+    }
+
+    getLocationAsync = async () => {
+
+        let { status } = await Permissions.askAsync(Permissions.LOCATION);
+
+        if (status === 'granted') {
+
+            let { locationServicesEnabled } = await Location.getProviderStatusAsync(); 
+
+            if(locationServicesEnabled) {
+
+                let location = await Location.getCurrentPositionAsync({enableHighAccuracy: true});
+                this.setState({ location }); 
+
+            }
+            else {
+                alert('Please turn on location services');   
+            }
+        }
+        else {
+            alert('Permission to access location was denied');     
+        }
+    }
+
+
     render () {
 
         const { navigation } = this.props; 
         const walkName = navigation.getParam('walkName'); 
+
+        let text = 'Waiting..';
+
+        if (this.state.errorMessage) {
+            text = this.state.errorMessage;
+        } else if (this.state.location) {
+            text = JSON.stringify(this.state.location);
+        }
 
         return (
             <View style={{
                   flex: 1
                 }}>
                 <WalkMap name={walkName}></WalkMap>
+                <Text style={styles.text}>{text}</Text>
             </View>
         )
     }
