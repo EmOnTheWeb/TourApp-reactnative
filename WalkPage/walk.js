@@ -74,18 +74,26 @@ class WalkMap extends React.Component {
     }
 }
 
+locationObservable = {}; 
+
 class WalkPage extends React.Component {
 
-
     state = {
-        location: null,
-        errorMessage: null,
+        
     };
 
     componentWillMount() {
 
         this.getLocationAsync();
         
+    }
+
+    componentWillUnmount() {
+
+        if(locationObservable !== {}) {
+            locationObservable.remove(); //prevent memory leaks
+        }
+
     }
 
     getLocationAsync = async () => {
@@ -98,10 +106,19 @@ class WalkPage extends React.Component {
 
             if(locationServicesEnabled) {
 
-                let location = await Location.getCurrentPositionAsync({enableHighAccuracy: true});
-                this.setState({ location }); 
+                let options = {
+                    enableHighAccuracy: true,
+                    timeInterval: 300, 
+                    distanceInterval: 5
+                }
 
-            }
+                let callback = (coords) => {
+                    console.log(coords); 
+                }
+
+                locationObservable = await Location.watchPositionAsync(options, callback); 
+   
+            }   
             else {
                 alert('Please turn on location services');   
             }
@@ -117,20 +134,11 @@ class WalkPage extends React.Component {
         const { navigation } = this.props; 
         const walkName = navigation.getParam('walkName'); 
 
-        let text = 'Waiting..';
-
-        if (this.state.errorMessage) {
-            text = this.state.errorMessage;
-        } else if (this.state.location) {
-            text = JSON.stringify(this.state.location);
-        }
-
         return (
             <View style={{
                   flex: 1
                 }}>
                 <WalkMap name={walkName}></WalkMap>
-                <Text style={styles.text}>{text}</Text>
             </View>
         )
     }
