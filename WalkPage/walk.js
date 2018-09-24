@@ -21,11 +21,6 @@ class WalkMap extends React.Component {
 
     }
 
-    componentDidUpdate() {
-
-        console.log(this.props.position); 
-    }
-
     getWalkCoordinates() {
 
         let walkName = this.props.name; 
@@ -34,6 +29,7 @@ class WalkMap extends React.Component {
         return coordinates[folderName]; 
         
     }
+
 
     render() {
 
@@ -65,10 +61,18 @@ class WalkMap extends React.Component {
                         />
                     ); 
                 })}
-                <MapView.Marker
-                    key="myLocation"
-                    coordinate={{latitude:51.5317842, longitude:-0.1685354}}
-                /> 
+
+                {this.props.position.map((myPosition,i) => {
+
+                    return (
+                        <MapView.Marker.Animated
+                            key="myLocation"
+                            ref={marker => { this.marker = marker }}
+                            coordinate={myPosition}
+                        />
+                    ); 
+                })} 
+             
                 <MapViewDirections
                     origin={segmentOrigin}
                     destination={segmentDestination}
@@ -87,7 +91,7 @@ locationObservable = {};
 class WalkPage extends React.Component {
 
     state = {
-        deviceLatLng: null
+        myPositionMarker: []
     }
 
     componentWillMount() {
@@ -123,7 +127,9 @@ class WalkPage extends React.Component {
                 let callback = (obj) => {
                     console.log(obj); 
 
-                    this.setState({deviceLatLng: { latitude: obj.coords.latitude , longitude:obj.coords.longitude }});  
+                    let myPositionMarker = [{ latitude: obj.coords.latitude , longitude:obj.coords.longitude }]; 
+
+                    this.setState({myPositionMarker});  
                 }
 
                 locationObservable = await Location.watchPositionAsync(options, callback); 
@@ -148,7 +154,7 @@ class WalkPage extends React.Component {
             <View style={{
                   flex: 1
                 }}>
-                <WalkMap name={walkName} position={this.state.deviceLatLng} ></WalkMap>
+                <WalkMap name={walkName} position={this.state.myPositionMarker} ></WalkMap>
             </View>
         )
     }
