@@ -62,8 +62,7 @@ class WalkMap extends React.Component {
                     ); 
                 })}
 
-                {this.props.position.map((myPosition,i) => {
-
+                {this.props.position.map((myPosition,i) => { 
                     return (
                         <MapView.Marker.Animated
                             key="myLocation"
@@ -91,7 +90,7 @@ locationObservable = {};
 class WalkPage extends React.Component {
 
     state = {
-        myPositionMarker: []
+        myPositionMarker: [] //make array with single coordinate object so you can map over it in render function
     }
 
     componentWillMount() {
@@ -121,7 +120,7 @@ class WalkPage extends React.Component {
                 let options = {
                     enableHighAccuracy: true,
                     timeInterval: 300, 
-                    distanceInterval: 5
+                    distanceInterval: 0
                 }
 
                 let callback = (obj) => {
