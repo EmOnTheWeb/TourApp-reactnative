@@ -14,7 +14,7 @@ class WalkMap extends React.Component {
 
         let origin = coordinates[0];  
         this.state = { origin }
-        console.log(this.state.origin); 
+
     }
 
     getWalkCoordinates() {
@@ -33,8 +33,8 @@ class WalkMap extends React.Component {
                   flex: 1
                 }}
                 initialRegion={{
-                  latitude: 37.78825,
-                  longitude: -122.4324,
+                  latitude: this.state.origin.latitude,
+                  longitude: this.state.origin.longitude,
                   latitudeDelta: 0.0922,
                   longitudeDelta: 0.0421
                 }}
