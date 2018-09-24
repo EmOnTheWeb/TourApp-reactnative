@@ -65,7 +65,10 @@ class WalkMap extends React.Component {
                         />
                     ); 
                 })}
-                    
+                <MapView.Marker
+                    key="myLocation"
+                    coordinate={{latitude:51.5317842, longitude:-0.1685354}}
+                /> 
                 <MapViewDirections
                     origin={segmentOrigin}
                     destination={segmentDestination}
