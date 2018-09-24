@@ -21,6 +21,11 @@ class WalkMap extends React.Component {
 
     }
 
+    componentDidUpdate() {
+
+        console.log(this.props.position); 
+    }
+
     getWalkCoordinates() {
 
         let walkName = this.props.name; 
@@ -79,8 +84,8 @@ locationObservable = {};
 class WalkPage extends React.Component {
 
     state = {
-        
-    };
+        deviceLatLng: null
+    }
 
     componentWillMount() {
 
@@ -112,8 +117,10 @@ class WalkPage extends React.Component {
                     distanceInterval: 5
                 }
 
-                let callback = (coords) => {
-                    console.log(coords); 
+                let callback = (obj) => {
+                    console.log(obj); 
+
+                    this.setState({deviceLatLng: { latitude: obj.coords.latitude , longitude:obj.coords.longitude }});  
                 }
 
                 locationObservable = await Location.watchPositionAsync(options, callback); 
@@ -138,7 +145,7 @@ class WalkPage extends React.Component {
             <View style={{
                   flex: 1
                 }}>
-                <WalkMap name={walkName}></WalkMap>
+                <WalkMap name={walkName} position={this.state.deviceLatLng} ></WalkMap>
             </View>
         )
     }
