@@ -2,7 +2,7 @@ import React from 'react';
 import { createStackNavigator } from 'react-navigation';
 import { StyleSheet, Text, View, Image, TouchableHighlight, FlatList } from 'react-native';
 import coordinates from '../coordinates'; 
-import MapView from 'react-native-maps';
+import { MapView } from "expo";
 
 class WalkMap extends React.Component {
 
@@ -29,17 +29,17 @@ class WalkMap extends React.Component {
     render() {
 
         return (
-            <View style={styles.container}><MapView style={styles.container} 
-    initialRegion={{
-      latitude: 37.78825,
-      longitude: -122.4324,
-      latitudeDelta: 0.0922,
-      longitudeDelta: 0.0421,
-    }}
-  /><Text> 
-                  hihi
-                </Text></View>
-        )
+            <MapView style={{
+                  flex: 1
+                }}
+                initialRegion={{
+                  latitude: 37.78825,
+                  longitude: -122.4324,
+                  latitudeDelta: 0.0922,
+                  longitudeDelta: 0.0421
+                }}
+            />
+        );
     }
 }
 
@@ -51,13 +51,11 @@ class WalkPage extends React.Component {
         const walkName = navigation.getParam('walkName'); 
 
         return (
-        	<View style={styles.container}>
-	            <Text> 
-	               {walkName}
-	            </Text>
+            <View style={{
+                  flex: 1
+                }}>
                 <WalkMap name={walkName}></WalkMap>
-	        </View>
-
+            </View>
         )
     }
 }
@@ -65,13 +63,7 @@ class WalkPage extends React.Component {
 export default WalkPage; 
 
 const styles = StyleSheet.create({
-    
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },   
+      
     text: {
         fontSize:20
     }

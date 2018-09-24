@@ -1,5 +1,20 @@
 {
-  "expo": {
-    "sdkVersion": "27.0.0"
-  }
+  	"expo": {
+	  	"name": "London Walks",
+	    "icon": "./assets/icon.png",
+	    "version": "1.0.0",
+	    "slug": "ldn-walks",
+	    "sdkVersion": "27.0.0",
+	    "ios": {
+	      "bundleIdentifier": "com.emiliedannenberg.ldnwalks"
+	    },
+	    "android": {
+	       "package": "com.emiliedannenberg.ldnwalks",
+	       "config": {
+      	       "googleMaps": { "apiKey": "AIzaSyAAJJrT3CACnKvsMwLB8G60QrfQ_yxD-a8" }   
+   		   }
+	    }
+  	}
 }
+
+
