@@ -62,7 +62,7 @@ class WalkMap extends React.Component {
                     ); 
                 })}
 
-                {this.props.position.map((myPosition,i) => { 
+                {this.props.position.map((myPosition,i) => {  
                     return (
                         <MapView.Marker.Animated
                             key="myLocation"
@@ -101,7 +101,7 @@ class WalkPage extends React.Component {
 
     componentWillUnmount() {
 
-        if(locationObservable !== {}) {
+        if(typeof locationObservable.remove !== 'undefined') {
             locationObservable.remove(); //prevent memory leaks
         }
 
@@ -120,7 +120,7 @@ class WalkPage extends React.Component {
                 let options = {
                     enableHighAccuracy: true,
                     timeInterval: 300, 
-                    distanceInterval: 0
+                    distanceInterval: 2
                 }
 
                 let callback = (obj) => {
@@ -136,6 +136,7 @@ class WalkPage extends React.Component {
             }   
             else {
                 alert('Please turn on location services');   
+                this.props.navigation.pop(); 
             }
         }
         else {
