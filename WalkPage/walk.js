@@ -183,9 +183,22 @@ class WalkPage extends React.Component {
 
     displayWaypointButton() {
 
-        return <TouchableHighlight>
-               <Text>Start walk</Text>
-               </TouchableHighlight> 
+        return <View style={styles.buttonContainer}><TouchableHighlight style={styles.button}>
+               <Text style={styles.text}>Play audio</Text>
+               </TouchableHighlight></View>
+    }
+
+    playWaypointAudio() {
+
+        const soundObject = new Expo.Audio.Sound();
+        
+        try {
+          //await soundObject.loadAsync(require('../assets/audio/central_london/waypoint_1.mp3'));
+          //await soundObject.playAsync();
+          // Your sound is playing!
+        } catch (error) {
+          // An error occurred!
+        }
     }
 
     render () {
@@ -212,6 +225,22 @@ export default WalkPage;
 const styles = StyleSheet.create({
       
     text: {
-        fontSize:20
+        fontSize:20,
+        color:'#fff'
+    },
+    button: {
+        alignItems: 'center',
+        backgroundColor: '#b84c5c',
+        padding: 10,
+        margin:10,
+        width:'95%',
+        borderRadius:5
+    },
+    buttonContainer: {
+        backgroundColor:'#fff', 
+        position:'absolute',
+        bottom:0,
+        left:0,
+        right:0
     }
 });
