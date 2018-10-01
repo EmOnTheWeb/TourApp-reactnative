@@ -1,9 +1,19 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableHighlight, LayoutAnimation, UIManager, Platform  } from 'react-native';
+import waypointImgs from './waypoint_imgs'
 
 class WaypointInfoBox extends React.Component {
-    state = {
-        waypointBoxHeight:0
+
+    constructor() {
+        super();
+ 
+        if( Platform.OS === 'android' ) {
+            UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
+        }
+
+        this.state = {
+            waypointBoxHeight:0
+        }
     }
 
     doWaypointStuff() {
@@ -15,7 +25,10 @@ class WaypointInfoBox extends React.Component {
 
     showImgAndControls() {
 
-        this.setState({waypointBoxHeight:500}); 
+        const slideUpAnim = LayoutAnimation.create(100, 'easeInEaseOut', 'opacity'); 
+        LayoutAnimation.configureNext(slideUpAnim);
+        
+        this.setState({waypointBoxHeight:320}); 
 
     }
 
@@ -31,7 +44,7 @@ class WaypointInfoBox extends React.Component {
             console.log(error); 
         }
     }
-    
+
     render () {
         return (
             <View>
@@ -42,8 +55,11 @@ class WaypointInfoBox extends React.Component {
                     <Text style={styles.text}>Play audio</Text>
                     </TouchableHighlight>
                 </View>
-                <View style={{height: this.state.waypointBoxHeight}}>
-                       
+                <View style={{height: this.state.waypointBoxHeight, backgroundColor:'#fff', padding:10 }}>
+                    <Text style={styles.waypointText}>{waypointImgs['central_london']['waypoint_1'].title}</Text>
+                    <Image
+                        source={waypointImgs['central_london']['waypoint_1'].src}
+                    />
                 </View>
             </View>
         )
@@ -58,6 +74,9 @@ const styles = StyleSheet.create({
         fontSize:20,
         color:'#fff'
     },
+    waypointText: {
+        fontSize:20
+    }, 
     button: {
         alignItems: 'center',
         backgroundColor: '#b84c5c',
