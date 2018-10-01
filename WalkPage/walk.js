@@ -37,6 +37,13 @@ class WalkMap extends React.Component {
         let segmentDestination = this.state.markers[this.state.currentSegment+1]; 
         const DIRECTIONS_API_KEY = 'AIzaSyAAJJrT3CACnKvsMwLB8G60QrfQ_yxD-a8';
 
+        let waypoint = {
+            lat: segmentDestination.latitude,
+            lng: segmentDestination.longitude
+        }
+
+        this.props.currentWaypoint({waypointNum:this.state.currentSegment+1,waypoint})
+
         return (
             <MapView style={{
                   flex: 1
@@ -90,7 +97,7 @@ locationObservable = {};
 class WalkPage extends React.Component {
 
     state = {
-        myPositionMarker: [] //make array with single coordinate object so you can map over it in render function
+        myPositionMarker: [], //make array with single coordinate object so you can map over it in render function
     }
 
     componentWillMount() {
@@ -124,15 +131,22 @@ class WalkPage extends React.Component {
                 }
 
                 let callback = (obj) => {
-                    console.log(obj); 
+            
+                    let { longitude, latitude } = obj.coords; 
 
-                    let myPositionMarker = [{ latitude: obj.coords.latitude , longitude:obj.coords.longitude }]; 
+                    let myPositionMarker = [{ latitude, longitude }]; 
 
-                    this.setState({myPositionMarker});  
+                    this.setState({myPositionMarker}); 
+
+                    console.log(this.isWithinRadius({mylat:latitude,mylng:longitude})); 
+                    if(this.isWithinRadius({mylat:latitude,mylng:longitude})) {
+
+                        
+                    } 
                 }
 
                 locationObservable = await Location.watchPositionAsync(options, callback); 
-   
+            
             }   
             else {
                 alert('Please turn on location services');   
@@ -144,6 +158,24 @@ class WalkPage extends React.Component {
         }
     }
 
+    isWithinRadius({mylat,mylng}) {
+
+        if(Math.abs(mylat - this.state.currentWaypointLat) <= 0.0008 && Math.abs(mylng - this.state.currentWaypointLng) <= 0.0008) {    
+            return true; 
+        }
+        return false; 
+
+    }
+
+    getCurrentWaypoint = ({waypointNum, waypoint:{lat, lng}}) => {
+
+        //save in state
+        this.state = {
+            currentWaypointNum:waypointNum,
+            currentWaypointLat:lat,
+            currentWaypointLng:lng
+        }
+    }
 
     render () {
 
@@ -154,7 +186,7 @@ class WalkPage extends React.Component {
             <View style={{
                   flex: 1
                 }}>
-                <WalkMap name={walkName} position={this.state.myPositionMarker} ></WalkMap>
+                <WalkMap name={walkName} position={this.state.myPositionMarker} currentWaypoint={this.getCurrentWaypoint}></WalkMap>
             </View>
         )
     }
