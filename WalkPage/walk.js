@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from 'react-navigation';
-import { StyleSheet, Text, View, Image, TouchableHighlight, FlatList } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableHighlight } from 'react-native';
 import coordinates from '../coordinates'; 
 import { MapView , Location, Permissions } from 'expo';
 import MapViewDirections from 'react-native-maps-directions';
@@ -30,7 +30,6 @@ class WalkMap extends React.Component {
         
     }
 
-
     render() {
 
         let segmentOrigin = this.state.markers[this.state.currentSegment]; 
@@ -42,7 +41,7 @@ class WalkMap extends React.Component {
             lng: segmentDestination.longitude
         }
 
-        this.props.currentWaypoint({waypointNum:this.state.currentSegment+1,waypoint})
+        this.props.currentWaypoint({waypointNum:this.state.currentSegment+1,waypoint}); 
 
         return (
             <MapView style={{
@@ -98,6 +97,7 @@ class WalkPage extends React.Component {
 
     state = {
         myPositionMarker: [], //make array with single coordinate object so you can map over it in render function
+        showButton: 0
     }
 
     componentWillMount() {
@@ -138,11 +138,14 @@ class WalkPage extends React.Component {
 
                     this.setState({myPositionMarker}); 
 
-                    console.log(this.isWithinRadius({mylat:latitude,mylng:longitude})); 
                     if(this.isWithinRadius({mylat:latitude,mylng:longitude})) {
-
+                        console.log('show button'); 
+                        this.setState({showButton:1})
                         
                     } 
+                    else {
+                        this.setState({showButton:0}); 
+                    }
                 }
 
                 locationObservable = await Location.watchPositionAsync(options, callback); 
@@ -177,6 +180,14 @@ class WalkPage extends React.Component {
         }
     }
 
+
+    displayWaypointButton() {
+
+        return <TouchableHighlight>
+               <Text>Start walk</Text>
+               </TouchableHighlight> 
+    }
+
     render () {
 
         const { navigation } = this.props; 
@@ -186,7 +197,11 @@ class WalkPage extends React.Component {
             <View style={{
                   flex: 1
                 }}>
-                <WalkMap name={walkName} position={this.state.myPositionMarker} currentWaypoint={this.getCurrentWaypoint}></WalkMap>
+                <WalkMap name={walkName} 
+                    position={this.state.myPositionMarker} 
+                    currentWaypoint={this.getCurrentWaypoint}
+                ></WalkMap>
+                {this.state.showButton === 1 ? this.displayWaypointButton() : <View></View>}
             </View>
         )
     }
