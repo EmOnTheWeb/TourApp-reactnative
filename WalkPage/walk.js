@@ -1,9 +1,10 @@
 import React from 'react';
 import { createStackNavigator } from 'react-navigation';
-import { StyleSheet, Text, View, Image, TouchableHighlight } from 'react-native';
+import { Text, View, Image, TouchableHighlight } from 'react-native';
 import coordinates from '../coordinates'; 
 import { MapView , Location, Permissions } from 'expo';
 import MapViewDirections from 'react-native-maps-directions';
+import WaypointInfoBox from './waypoint'; 
 
 class WalkMap extends React.Component {
 
@@ -180,27 +181,6 @@ class WalkPage extends React.Component {
         }
     }
 
-
-    displayWaypointButton() {
-
-        return <View style={styles.buttonContainer}><TouchableHighlight style={styles.button}>
-               <Text style={styles.text}>Play audio</Text>
-               </TouchableHighlight></View>
-    }
-
-    playWaypointAudio() {
-
-        const soundObject = new Expo.Audio.Sound();
-        
-        try {
-          //await soundObject.loadAsync(require('../assets/audio/central_london/waypoint_1.mp3'));
-          //await soundObject.playAsync();
-          // Your sound is playing!
-        } catch (error) {
-          // An error occurred!
-        }
-    }
-
     render () {
 
         const { navigation } = this.props; 
@@ -214,33 +194,10 @@ class WalkPage extends React.Component {
                     position={this.state.myPositionMarker} 
                     currentWaypoint={this.getCurrentWaypoint}
                 ></WalkMap>
-                {this.state.showButton === 1 ? this.displayWaypointButton() : <View></View>}
+                {this.state.showButton === 1 ? <WaypointInfoBox></WaypointInfoBox> : <View></View>}
             </View>
         )
     }
 }
 
 export default WalkPage; 
-
-const styles = StyleSheet.create({
-      
-    text: {
-        fontSize:20,
-        color:'#fff'
-    },
-    button: {
-        alignItems: 'center',
-        backgroundColor: '#b84c5c',
-        padding: 10,
-        margin:10,
-        width:'95%',
-        borderRadius:5
-    },
-    buttonContainer: {
-        backgroundColor:'#fff', 
-        position:'absolute',
-        bottom:0,
-        left:0,
-        right:0
-    }
-});
