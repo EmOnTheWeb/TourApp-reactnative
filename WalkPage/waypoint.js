@@ -1,8 +1,11 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableHighlight, LayoutAnimation, UIManager, Platform  } from 'react-native';
 import waypointImgs from './waypoint_imgs'
+import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
 
 class WaypointInfoBox extends React.Component {
+
+    soundObject; 
 
     constructor() {
         super();
@@ -13,7 +16,8 @@ class WaypointInfoBox extends React.Component {
 
         this.state = {
             waypointBoxHeight:0,
-            showWaypointBox:0
+            showWaypointBox:0, 
+            audioPaused:0
         }
     }
 
@@ -29,31 +33,71 @@ class WaypointInfoBox extends React.Component {
         const slideUpAnim = LayoutAnimation.create(100, 'easeInEaseOut', 'opacity'); 
         LayoutAnimation.configureNext(slideUpAnim);
         
-        this.setState({waypointBoxHeight:320, showWaypointBox:1}); 
+        this.setState({waypointBoxHeight:210, showWaypointBox:1}); 
 
     }
 
     async playWaypointAudio() {
 
-        const soundObject = new Expo.Audio.Sound();
+        this.soundObject = new Expo.Audio.Sound();
         
         try {
-          await soundObject.loadAsync(require('../assets/central_london/audio/waypoint_1.mp3'));
-          await soundObject.playAsync();
+          await this.soundObject.loadAsync(require('../assets/central_london/audio/waypoint_1.mp3'));
+          await this.soundObject.playAsync();
           
         } catch (error) {
             console.log(error); 
         }
     }
 
+    waypointBoxStyles() {
+        return {
+            height: this.state.waypointBoxHeight, 
+            backgroundColor:'#fff', 
+            padding:3,
+            position:'absolute',
+            left:0,
+            right:0,
+            bottom:0,
+            justifyContent:'center'
+        }
+    }
+
     renderWaypointBoxContents() {
 
-          return <View style={{height: this.state.waypointBoxHeight, backgroundColor:'#fff', padding:10 }}>
-                    <Text style={styles.waypointText}>{waypointImgs['central_london']['waypoint_1'].title}</Text>
-                        <Image
-                            source={waypointImgs['central_london']['waypoint_1'].src}
-                        />
-                </View>
+        return <View style={this.waypointBoxStyles()}>
+                <Text style={styles.waypointText}>{waypointImgs['central_london']['waypoint_1'].title}</Text>
+                <View style={{flexDirection:'row', justifyContent:'space-between', }}>
+                    <Image
+                        style={styles.thumbImg}
+                        source={waypointImgs['central_london']['waypoint_1'].src}
+                        resizeMode='contain'
+                    /> 
+                    <View style={styles.audioControls}> 
+                        <MaterialIcons name="replay" size={55} color="#b84c5c" onPress={()=>this.replayAudio()}/> 
+                        {this.state.audioPaused === 0 ? <FontAwesome name="pause-circle-o" size={55} color="#b84c5c" onPress={()=>this.pauseAudio()} style={{marginLeft:15}} /> : <FontAwesome/> }
+                        {this.state.audioPaused === 1 ? <FontAwesome name="play-circle-o" size={55} color="#b84c5c" onPress={()=>this.resumeAudio()} style={{marginLeft:15}} /> : <FontAwesome/> }
+                    </View>
+                </View>  
+            </View>
+    }
+
+    async replayAudio() {
+
+        this.soundObject.replayAsync(); 
+    }
+
+    async pauseAudio() {
+
+        this.soundObject.pauseAsync(); 
+        this.setState({audioPaused:1});  
+
+    }
+
+    async resumeAudio() {
+
+        this.soundObject.playAsync(); 
+        this.setState({audioPaused:0}); 
     }
 
     renderPlayAudioButton() {
@@ -86,10 +130,12 @@ const styles = StyleSheet.create({
       
     text: {
         fontSize:20,
-        color:'#fff'
+        color:'#fff',
     },
     waypointText: {
-        fontSize:20
+        fontSize:20,
+        padding:5,
+        backgroundColor:'lightgray'
     }, 
     button: {
         alignItems: 'center',
@@ -105,5 +151,18 @@ const styles = StyleSheet.create({
         bottom:0,
         left:0,
         right:0
+    },
+    thumbImg: {
+        height:175,
+        width:175,
+        padding:5
+    },
+    audioControls: {
+        height:175,
+        width:175,
+        padding:5,
+        alignItems:'center', 
+        justifyContent:'center',
+        flexDirection:'row'   
     }
 });
