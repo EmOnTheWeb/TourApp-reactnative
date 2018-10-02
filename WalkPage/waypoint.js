@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableHighlight, LayoutAnimation, UIManager, Platform  } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableHighlight, Button, LayoutAnimation, UIManager, Platform  } from 'react-native';
 import waypointImgs from './waypoint_imgs'
 import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
 
@@ -17,7 +17,8 @@ class WaypointInfoBox extends React.Component {
         this.state = {
             waypointBoxHeight:0,
             showWaypointBox:0, 
-            audioPaused:0
+            audioPaused:0,
+            audioFinished:0
         }
     }
 
@@ -33,17 +34,28 @@ class WaypointInfoBox extends React.Component {
         const slideUpAnim = LayoutAnimation.create(100, 'easeInEaseOut', 'opacity'); 
         LayoutAnimation.configureNext(slideUpAnim);
         
-        this.setState({waypointBoxHeight:210, showWaypointBox:1}); 
+        this.setState({waypointBoxHeight:213, showWaypointBox:1}); 
 
     }
+
+
 
     async playWaypointAudio() {
 
         this.soundObject = new Expo.Audio.Sound();
         
         try {
-          await this.soundObject.loadAsync(require('../assets/central_london/audio/waypoint_1.mp3'));
-          await this.soundObject.playAsync();
+            await this.soundObject.loadAsync(require('../assets/central_london/audio/waypoint_1.mp3'));
+            await this.soundObject.playAsync();
+
+            let onPlaybackStatusUpdate = (status) => {
+                console.log(status);
+                if(status.didJustFinish) {
+                    this.setState({audioFinished:1}); 
+                } 
+            }
+
+            this.soundObject.setOnPlaybackStatusUpdate(onPlaybackStatusUpdate); 
           
         } catch (error) {
             console.log(error); 
@@ -54,13 +66,25 @@ class WaypointInfoBox extends React.Component {
         return {
             height: this.state.waypointBoxHeight, 
             backgroundColor:'#fff', 
-            padding:3,
             position:'absolute',
             left:0,
             right:0,
             bottom:0,
             justifyContent:'center'
         }
+    }
+
+    takeMeToNextWaypoint() {
+        console.log('done'); 
+
+    }
+
+    renderDoneButton() {
+
+        return  <TouchableHighlight style={styles.button} 
+                    onPress={() => {this.takeMeToNextWaypoint()}}>
+                    <Text style={styles.text}>Done</Text>
+                </TouchableHighlight> 
     }
 
     renderWaypointBoxContents() {
@@ -75,8 +99,10 @@ class WaypointInfoBox extends React.Component {
                     /> 
                     <View style={styles.audioControls}> 
                         <MaterialIcons name="replay" size={55} color="#b84c5c" onPress={()=>this.replayAudio()}/> 
-                        {this.state.audioPaused === 0 ? <FontAwesome name="pause-circle-o" size={55} color="#b84c5c" onPress={()=>this.pauseAudio()} style={{marginLeft:15}} /> : <FontAwesome/> }
-                        {this.state.audioPaused === 1 ? <FontAwesome name="play-circle-o" size={55} color="#b84c5c" onPress={()=>this.resumeAudio()} style={{marginLeft:15}} /> : <FontAwesome/> }
+                        {this.state.audioPaused === 0 && this.state.audioFinished ===0 ? <FontAwesome name="pause-circle-o" size={55} color="#b84c5c" onPress={()=>this.pauseAudio()} style={{marginLeft:20}} /> : <FontAwesome/> }
+                        {this.state.audioPaused === 1 && this.state.audioFinished ===0 ? <FontAwesome name="play-circle-o" size={55} color="#b84c5c" onPress={()=>this.resumeAudio()} style={{marginLeft:20}} /> : <FontAwesome/> }
+                        {this.state.audioFinished === 1 ?
+                           this.renderDoneButton() : <View></View>}
                     </View>
                 </View>  
             </View>
@@ -85,6 +111,10 @@ class WaypointInfoBox extends React.Component {
     async replayAudio() {
 
         this.soundObject.replayAsync(); 
+
+        if(this.state.audioFinished===1) {
+            this.setState({audioFinished:0}); 
+        }
     }
 
     async pauseAudio() {
@@ -143,7 +173,8 @@ const styles = StyleSheet.create({
         padding: 10,
         margin:10,
         width:'95%',
-        borderRadius:5
+        borderRadius:5,
+        alignSelf:'flex-end'
     },
     buttonContainer: {
         backgroundColor:'#fff', 
@@ -155,14 +186,15 @@ const styles = StyleSheet.create({
     thumbImg: {
         height:175,
         width:175,
-        padding:5
+        margin:2,
+        marginRight:0
     },
     audioControls: {
         height:175,
         width:175,
-        padding:5,
-        alignItems:'center', 
+        padding:10,
+        alignItems:'flex-start', 
         justifyContent:'center',
-        flexDirection:'row'   
+        flexDirection:'row'  
     }
 });
