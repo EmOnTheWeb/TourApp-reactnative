@@ -18,7 +18,6 @@ class WalkMap extends React.Component {
         let origin = markers[0]; 
 
         this.state = { origin, markers }; 
-        this.state.currentSegment = 0; //initialise at 0 
 
     }
 
@@ -33,8 +32,8 @@ class WalkMap extends React.Component {
 
     render() {
 
-        let segmentOrigin = this.state.markers[this.state.currentSegment]; 
-        let segmentDestination = this.state.markers[this.state.currentSegment+1]; 
+        let segmentOrigin = this.state.markers[this.props.currentSegment]; 
+        let segmentDestination = this.state.markers[this.props.currentSegment+1]; 
         const DIRECTIONS_API_KEY = 'AIzaSyAAJJrT3CACnKvsMwLB8G60QrfQ_yxD-a8';
 
         let waypoint = {
@@ -42,7 +41,7 @@ class WalkMap extends React.Component {
             lng: segmentDestination.longitude
         }
 
-        this.props.currentWaypoint({waypointNum:this.state.currentSegment+1,waypoint}); 
+        this.props.returnWaypointDetails({waypointNum:this.props.currentSegment+1,waypoint}); 
 
         return (
             <MapView style={{
@@ -98,7 +97,8 @@ class WalkPage extends React.Component {
 
     state = {
         myPositionMarker: [], //make array with single coordinate object so you can map over it in render function
-        showButton: 0
+        showButton: 0,
+        currentSegment:0
     }
 
     componentWillMount() {
@@ -171,7 +171,7 @@ class WalkPage extends React.Component {
 
     }
 
-    getCurrentWaypoint = ({waypointNum, waypoint:{lat, lng}}) => {
+    getCurrentWaypointDetails = ({waypointNum, waypoint:{lat, lng}}) => {
 
         //save in state
         this.state = {
@@ -179,6 +179,14 @@ class WalkPage extends React.Component {
             currentWaypointLat:lat,
             currentWaypointLng:lng
         }
+    }
+
+    directToNextWaypoint = () => {
+
+        console.log('hi'); 
+        this.setState(previousState =>  {
+            return {currentSegment:previousState.currentSegment+1}
+        })
     }
 
     render () {
@@ -192,9 +200,10 @@ class WalkPage extends React.Component {
                 }}>
                 <WalkMap name={walkName} 
                     position={this.state.myPositionMarker} 
-                    currentWaypoint={this.getCurrentWaypoint}
+                    returnWaypointDetails={this.getCurrentWaypointDetails}
+                    currentSegment={this.state.currentSegment}
                 ></WalkMap>
-                {this.state.showButton === 1 ? <WaypointInfoBox></WaypointInfoBox> : <View></View>}
+                {this.state.showButton === 1 ? <WaypointInfoBox directToNextWaypoint={this.directToNextWaypoint}></WaypointInfoBox> : <View></View>}
             </View>
         )
     }

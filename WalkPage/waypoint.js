@@ -75,8 +75,8 @@ class WaypointInfoBox extends React.Component {
     }
 
     takeMeToNextWaypoint() {
-        console.log('done'); 
-
+    
+        this.props.directToNextWaypoint(); 
     }
 
     renderDoneButton() {
