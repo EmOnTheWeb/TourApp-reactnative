@@ -12,7 +12,8 @@ class WaypointInfoBox extends React.Component {
         }
 
         this.state = {
-            waypointBoxHeight:0
+            waypointBoxHeight:0,
+            showWaypointBox:0
         }
     }
 
@@ -28,7 +29,7 @@ class WaypointInfoBox extends React.Component {
         const slideUpAnim = LayoutAnimation.create(100, 'easeInEaseOut', 'opacity'); 
         LayoutAnimation.configureNext(slideUpAnim);
         
-        this.setState({waypointBoxHeight:320}); 
+        this.setState({waypointBoxHeight:320, showWaypointBox:1}); 
 
     }
 
@@ -45,22 +46,35 @@ class WaypointInfoBox extends React.Component {
         }
     }
 
+    renderWaypointBoxContents() {
+
+          return <View style={{height: this.state.waypointBoxHeight, backgroundColor:'#fff', padding:10 }}>
+                    <Text style={styles.waypointText}>{waypointImgs['central_london']['waypoint_1'].title}</Text>
+                        <Image
+                            source={waypointImgs['central_london']['waypoint_1'].src}
+                        />
+                </View>
+    }
+
+    renderPlayAudioButton() {
+
+        if(this.state.showWaypointBox === 0) {
+
+            return  <View style={styles.buttonContainer}>
+                        <TouchableHighlight style={styles.button} 
+                          onPress={() => {this.doWaypointStuff()}
+                    }>
+                        <Text style={styles.text}>Play audio</Text>
+                        </TouchableHighlight>
+                    </View>
+        }
+    }
+
     render () {
         return (
             <View>
-                <View style={styles.buttonContainer}>
-                    <TouchableHighlight style={styles.button} 
-                          onPress={() => {this.doWaypointStuff()}
-                    }>
-                    <Text style={styles.text}>Play audio</Text>
-                    </TouchableHighlight>
-                </View>
-                <View style={{height: this.state.waypointBoxHeight, backgroundColor:'#fff', padding:10 }}>
-                    <Text style={styles.waypointText}>{waypointImgs['central_london']['waypoint_1'].title}</Text>
-                    <Image
-                        source={waypointImgs['central_london']['waypoint_1'].src}
-                    />
-                </View>
+               {this.renderPlayAudioButton()}
+               {this.state.showWaypointBox === 1 ? this.renderWaypointBoxContents() : <View></View>}
             </View>
         )
     }
