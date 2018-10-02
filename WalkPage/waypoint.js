@@ -91,7 +91,7 @@ class WaypointInfoBox extends React.Component {
 
         return <View style={this.waypointBoxStyles()}>
                 <Text style={styles.waypointText}>{waypointImgs['central_london']['waypoint_1'].title}</Text>
-                <View style={{flexDirection:'row', justifyContent:'space-between', }}>
+                <View style={{flexDirection:'row', justifyContent:'space-between'}}>
                     <Image
                         style={styles.thumbImg}
                         source={waypointImgs['central_london']['waypoint_1'].src}
@@ -173,8 +173,7 @@ const styles = StyleSheet.create({
         padding: 10,
         margin:10,
         width:'95%',
-        borderRadius:5,
-        alignSelf:'flex-end'
+        borderRadius:5
     },
     buttonContainer: {
         backgroundColor:'#fff', 
@@ -195,6 +194,7 @@ const styles = StyleSheet.create({
         padding:10,
         alignItems:'flex-start', 
         justifyContent:'center',
-        flexDirection:'row'  
+        flexDirection:'row', 
+        flexWrap:'wrap' 
     }
 });
