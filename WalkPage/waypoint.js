@@ -49,7 +49,7 @@ class WaypointInfoBox extends React.Component {
             await this.soundObject.playAsync();
 
             let onPlaybackStatusUpdate = (status) => {
-                console.log(status);
+             
                 if(status.didJustFinish) {
                     this.setState({audioFinished:1}); 
                 } 
@@ -77,6 +77,8 @@ class WaypointInfoBox extends React.Component {
     takeMeToNextWaypoint() {
     
         this.props.directToNextWaypoint(); 
+        //this.setState({waypointBoxHeight:0, showWaypointBox:0}); 
+
     }
 
     renderDoneButton() {

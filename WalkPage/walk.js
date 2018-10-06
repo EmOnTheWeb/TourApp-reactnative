@@ -17,9 +17,22 @@ class WalkMap extends React.Component {
         let markers = coordinates; 
         let origin = markers[0]; 
 
+        this.props.totalNumWaypoints(markers.length-1); 
+
         this.state = { origin, markers }; 
 
     }
+
+    shouldComponentUpdate(nextProps, nextState) {
+
+        if(typeof nextState.markers[nextProps.currentSegment+1] === 'undefined') {
+            return false; 
+        }
+        else {
+            return true; 
+        }
+    }
+
 
     getWalkCoordinates() {
 
@@ -42,6 +55,7 @@ class WalkMap extends React.Component {
         }
 
         this.props.returnWaypointDetails({waypointNum:this.props.currentSegment+1,waypoint}); 
+      
 
         return (
             <MapView style={{
@@ -77,7 +91,6 @@ class WalkMap extends React.Component {
                         />
                     ); 
                 })} 
-             
                 <MapViewDirections
                     origin={segmentOrigin}
                     destination={segmentDestination}
@@ -164,7 +177,7 @@ class WalkPage extends React.Component {
 
     isWithinRadius({mylat,mylng}) {
 
-        if(Math.abs(mylat - this.state.currentWaypointLat) <= 0.0008 && Math.abs(mylng - this.state.currentWaypointLng) <= 0.0008) {    
+        if(Math.abs(mylat - this.state.waypointDetails.currentWaypointLat) <= 0.0008 && Math.abs(mylng - this.state.waypointDetails.currentWaypointLng) <= 0.0008) {    
             return true; 
         }
         return false; 
@@ -174,19 +187,32 @@ class WalkPage extends React.Component {
     getCurrentWaypointDetails = ({waypointNum, waypoint:{lat, lng}}) => {
 
         //save in state
-        this.state = {
+        this.state.waypointDetails = {
+
             currentWaypointNum:waypointNum,
             currentWaypointLat:lat,
             currentWaypointLng:lng
         }
     }
 
-    directToNextWaypoint = () => {
+    getTotalNumWaypoints = (numWaypoints) => {
+   
+        this.state.totalNumWaypoints = numWaypoints; 
+     
+    }
 
-        console.log('hi'); 
-        this.setState(previousState =>  {
-            return {currentSegment:previousState.currentSegment+1}
-        })
+    directToNextWaypoint = () => {
+     
+        if(this.state.waypointDetails.currentWaypointNum === this.state.totalNumWaypoints) {
+            console.log('this is the last waypoint')
+
+        }
+        else {
+            this.setState(previousState =>  {
+                return {currentSegment:previousState.currentSegment+1}
+            });
+        }
+        //this.state.showButton = 0; 
     }
 
     render () {
@@ -202,6 +228,7 @@ class WalkPage extends React.Component {
                     position={this.state.myPositionMarker} 
                     returnWaypointDetails={this.getCurrentWaypointDetails}
                     currentSegment={this.state.currentSegment}
+                    totalNumWaypoints={this.getTotalNumWaypoints}
                 ></WalkMap>
                 {this.state.showButton === 1 ? <WaypointInfoBox directToNextWaypoint={this.directToNextWaypoint}></WaypointInfoBox> : <View></View>}
             </View>
