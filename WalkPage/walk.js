@@ -13,7 +13,8 @@ class WalkPage extends React.Component {
     state = {
         myPositionMarker: [], //make array with single coordinate object so you can map over it in render function
         showButton: 0,
-        currentSegment:0
+        currentSegment:0,
+        isFirstWaypoint:true //flag to make sure u get origin of the first segment 
     }
 
     componentWillMount() {
@@ -55,7 +56,6 @@ class WalkPage extends React.Component {
                     this.setState({myPositionMarker}); 
 
                     if(this.isWithinRadius({mylat:latitude,mylng:longitude})) {
-                        console.log('show button'); 
                         this.setState({showButton:1})
                         
                     } 
@@ -104,10 +104,13 @@ class WalkPage extends React.Component {
     }
 
     directToNextWaypoint = () => {
-     
+  
         if(this.state.waypointDetails.currentWaypointNum === this.state.totalNumWaypoints) {
-            console.log('this is the last waypoint')
+            console.log('this is the last waypoint'); 
 
+        }
+        else if(this.state.isFirstWaypoint) { //is first waypoint-origin of first segment don't update the directions segment (going to dest next)
+            this.setState({isFirstWaypoint:false}); 
         }
         else {
             this.setState(previousState =>  {
@@ -131,6 +134,7 @@ class WalkPage extends React.Component {
                     returnWaypointDetails={this.getCurrentWaypointDetails}
                     currentSegment={this.state.currentSegment}
                     totalNumWaypoints={this.getTotalNumWaypoints}
+                    isFirstWaypoint={this.state.isFirstWaypoint}
                 ></WalkMap>
                 {this.state.showButton === 1 ? <WaypointInfoBox directToNextWaypoint={this.directToNextWaypoint}></WaypointInfoBox> : <View></View>}
             </View>

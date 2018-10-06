@@ -48,12 +48,25 @@ class WalkMap extends React.Component {
         let segmentDestination = this.state.markers[this.props.currentSegment+1]; 
         const DIRECTIONS_API_KEY = 'AIzaSyAAJJrT3CACnKvsMwLB8G60QrfQ_yxD-a8';
 
-        let waypoint = {
-            lat: segmentDestination.latitude,
-            lng: segmentDestination.longitude
+        let waypoint; let waypointNum; 
+        
+        if(this.props.isFirstWaypoint) {
+            waypoint = {
+                lat: segmentOrigin.latitude,
+                lng: segmentOrigin.longitude
+            }
+            waypointNum = 0; 
+        }
+        else {
+            waypoint = {
+                lat: segmentDestination.latitude,
+                lng: segmentDestination.longitude
+            }
+
+            waypointNum = this.props.currentSegment + 1; 
         }
 
-        this.props.returnWaypointDetails({waypointNum:this.props.currentSegment+1,waypoint}); 
+        this.props.returnWaypointDetails({waypointNum, waypoint}); 
       
 
         return (
