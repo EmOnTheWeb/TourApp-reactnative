@@ -77,7 +77,7 @@ class WaypointInfoBox extends React.Component {
     takeMeToNextWaypoint() {
     
         this.props.directToNextWaypoint(); 
-        //this.setState({waypointBoxHeight:0, showWaypointBox:0}); 
+        this.setState({waypointBoxHeight:0, showWaypointBox:0}); 
 
     }
 
