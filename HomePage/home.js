@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from 'react-navigation'; 
-import { StyleSheet, Text, View, Image, TouchableHighlight, FlatList } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableHighlight, FlatList, Dimensions } from 'react-native';
 
 const list = [
         {
@@ -9,11 +9,12 @@ const list = [
             image: require('../assets/imgs/Central-London.png')    
         },
         {
-            name: 'East London',
+            name: 'St Johns Wood',
             description: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt',
-            image: require('../assets/imgs/Central-London.png')
+            image: require('../assets/imgs/St-Johns-Wood.png')
         }
     ]; 
+
 
 class HomePage extends React.Component {
 
@@ -65,10 +66,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
-        flexWrap:'wrap'
+        width: Dimensions.get('window').width
     },
     image: {
-      
+        maxHeight:300
     }, 
     button: {
         alignItems: 'center',
@@ -76,7 +77,8 @@ const styles = StyleSheet.create({
         padding: 10,
         margin:10,
         width:'95%',
-        borderRadius:5
+        borderRadius:5,
+        marginBottom:0
     },
     text: {
         fontSize:20,
@@ -84,9 +86,15 @@ const styles = StyleSheet.create({
     },
     titleText: {
         fontSize:20,
-        fontWeight:'bold',
-        margin:10,
-        alignSelf:'flex-start'
+        backgroundColor:'#A99F96',
+        alignSelf:'flex-start',
+        width:'100%',
+        marginBottom:2, 
+        paddingRight:10,
+        paddingLeft:10,
+        paddingTop:5,
+        paddingBottom:5,
+        color:'#fff'
     },
     descriptionText: {
         fontSize:15,

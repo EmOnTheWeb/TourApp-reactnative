@@ -167,7 +167,8 @@ const styles = StyleSheet.create({
     waypointText: {
         fontSize:20,
         padding:5,
-        backgroundColor:'lightgray'
+        backgroundColor:'#A99F96',
+        color:'#fff'
     }, 
     button: {
         alignItems: 'center',
