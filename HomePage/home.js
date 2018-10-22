@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
         width: Dimensions.get('window').width
     },
     image: {
-        maxHeight:300
+        maxHeight:200
     }, 
     button: {
         alignItems: 'center',
