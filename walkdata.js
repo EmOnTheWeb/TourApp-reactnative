@@ -1,3 +1,17 @@
+export const homepageWalkData = [
+		        {
+		            name: 'Central London',
+		            description: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt',
+		            image: require('./assets/imgs/Central-London.png')    
+		        },
+		        {
+		            name: 'St Johns Wood',
+		            description: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt',
+		            image: require('./assets/imgs/St-Johns-Wood.png')
+		        }
+			]; 
+
+
 export const coordinates = {	
 	"central_london": [
 		{latitude:51.500782092628455, longitude:-0.12462615966796875},
@@ -12,20 +26,3 @@ export const coordinates = {
 		{latitude:51.53160079160583,longitude:-0.17045843328583032}
 	]
 } 
-
-export function requireWaypointAudio(walkName) {
-
-	if(walkName === "st_johns_wood") {
-		let waypoint_1 = require('./assets/central_london/audio/waypoint_1.mp3'); 
-		let waypoint_2 = require('./assets/central_london/audio/waypoint_1.mp3'); 
-
-		return {
-			waypoint_1, 
-			waypoint_2
-		}
-	}	
-
-
-
-
-}

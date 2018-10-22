@@ -1,19 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from 'react-navigation'; 
 import { StyleSheet, Text, View, Image, TouchableHighlight, FlatList, Dimensions } from 'react-native';
-
-const list = [
-        {
-            name: 'Central London',
-            description: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt',
-            image: require('../assets/imgs/Central-London.png')    
-        },
-        {
-            name: 'St Johns Wood',
-            description: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt',
-            image: require('../assets/imgs/St-Johns-Wood.png')
-        }
-    ]; 
+import { homepageWalkData } from '../walkdata'; 
 
 
 class HomePage extends React.Component {
@@ -48,7 +36,7 @@ class HomePage extends React.Component {
         return (
            <View style={styles.container}> 
               <FlatList horizontal 
-                data={list}
+                data={homepageWalkData}
                 renderItem={this.renderRow}
                 keyExtractor={item => item.name}
                 navigation={this.props.navigation}

@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableHighlight, Button, LayoutAnimation, UIManager, Platform, Dimensions  } from 'react-native';
-import waypointImgs from './waypoint_imgs'
 import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
 
 class WaypointInfoBox extends React.Component {
@@ -14,11 +13,14 @@ class WaypointInfoBox extends React.Component {
             UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
         }
 
+        let waypointNumber = props.currentWaypoint + 1; 
+
         this.state = {
             waypointBoxHeight:0,
             showWaypointBox:0, 
             audioPaused:0,
-            audioFinished:0
+            audioFinished:0,
+            waypointKey: 'waypoint_' + waypointNumber
         }
     }
 
@@ -44,11 +46,8 @@ class WaypointInfoBox extends React.Component {
 
         this.soundObject = new Expo.Audio.Sound();
 
-        let waypointNumber = this.props.currentWaypoint + 1; 
-        let waypointAudioKey = 'waypoint_' + waypointNumber; 
-
         try {
-            await this.soundObject.loadAsync(this.props.waypointAudio[waypointAudioKey]);
+            await this.soundObject.loadAsync(this.props.waypointAudio[this.state.waypointKey]);
             await this.soundObject.playAsync();
 
             let onPlaybackStatusUpdate = (status) => {
@@ -97,11 +96,11 @@ class WaypointInfoBox extends React.Component {
     renderWaypointBoxContents() {
 
         return <View style={this.waypointBoxStyles()}>
-                <Text style={styles.waypointText}>{waypointImgs['central_london']['waypoint_1'].title}</Text>
+                <Text style={styles.waypointText}>{this.props.waypointData[this.state.waypointKey].title}</Text>
                 <View style={{flexDirection:'row', justifyContent:'space-between'}}>
                     <Image
                         style={styles.thumbImg}
-                        source={waypointImgs['central_london']['waypoint_1'].src}
+                        source={this.props.waypointData[this.state.waypointKey].img_src}
                         resizeMode='contain'
                     /> 
                     <View style={styles.audioControls}> 
