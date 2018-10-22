@@ -86,15 +86,15 @@ const styles = StyleSheet.create({
     },
     titleText: {
         fontSize:20,
-        backgroundColor:'#A99F96',
-        alignSelf:'flex-start',
-        width:'100%',
-        marginBottom:2, 
-        paddingRight:10,
-        paddingLeft:10,
-        paddingTop:5,
-        paddingBottom:5,
-        color:'#fff'
+        width:'95%',
+        marginBottom:5, 
+        borderColor:'#A99F96',
+        borderWidth:4,
+        borderRadius:5,
+        borderTopWidth:0,
+        borderRightWidth:0,
+        borderLeftWidth:0,
+        color:'black'
     },
     descriptionText: {
         fontSize:15,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableHighlight, Button, LayoutAnimation, UIManager, Platform  } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableHighlight, Button, LayoutAnimation, UIManager, Platform, Dimensions  } from 'react-native';
 import waypointImgs from './waypoint_imgs'
 import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
 
@@ -34,7 +34,7 @@ class WaypointInfoBox extends React.Component {
         const slideUpAnim = LayoutAnimation.create(100, 'easeInEaseOut', 'opacity'); 
         LayoutAnimation.configureNext(slideUpAnim);
         
-        this.setState({waypointBoxHeight:213, showWaypointBox:1}); 
+        this.setState({waypointBoxHeight:Dimensions.get('window').width/2 + 35, showWaypointBox:1}); 
 
     }
 
@@ -65,11 +65,13 @@ class WaypointInfoBox extends React.Component {
     waypointBoxStyles() {
         return {
             height: this.state.waypointBoxHeight, 
+            width: Dimensions.get('window').width,
             backgroundColor:'#fff', 
             position:'absolute',
             left:0,
             right:0,
             bottom:0,
+            right:0,
             justifyContent:'center'
         }
     }
@@ -166,9 +168,16 @@ const styles = StyleSheet.create({
     },
     waypointText: {
         fontSize:20,
-        padding:5,
-        backgroundColor:'#A99F96',
-        color:'#fff'
+        paddingTop:3,
+        borderTopWidth:0,
+        marginLeft:2,
+        paddingLeft:5,
+        borderColor:'#A99F96',
+        borderWidth:2,
+        borderLeftWidth:0,
+        borderRightWidth:0,
+        color:'black',
+        width:'96%' 
     }, 
     button: {
         alignItems: 'center',
@@ -186,15 +195,15 @@ const styles = StyleSheet.create({
         right:0
     },
     thumbImg: {
-        height:175,
-        width:175,
+        height:Dimensions.get('window').width/2,
+        width:Dimensions.get('window').width/2,
         margin:2,
         marginRight:0
     },
     audioControls: {
-        height:175,
-        width:175,
         padding:10,
+        height:Dimensions.get('window').width/2,
+        width:Dimensions.get('window').width/2,
         alignItems:'flex-start', 
         justifyContent:'center',
         flexDirection:'row', 
