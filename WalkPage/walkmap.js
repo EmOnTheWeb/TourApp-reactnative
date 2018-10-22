@@ -100,6 +100,8 @@ class WalkMap extends React.Component {
                             key="myLocation"
                             ref={marker => { this.marker = marker }}
                             coordinate={myPosition}
+                            image={require('../assets/imgs/Walk_Icon.png')}
+                            style={{zIndex:2}}
                         />
                     ); 
                 })} 
