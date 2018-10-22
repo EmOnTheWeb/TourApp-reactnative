@@ -36,8 +36,8 @@ class WalkMap extends React.Component {
     getWalkCoordinates() {
 
         let walkName = this.props.name; 
-        let folderName = walkName.replace(' ','_').toLowerCase(); 
-
+        let folderName = walkName.replace(/ /g,'_').replace(/'/g,'').toLowerCase(); 
+       
         return coordinates[folderName]; 
         
     }
