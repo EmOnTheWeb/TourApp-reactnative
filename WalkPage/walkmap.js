@@ -2,7 +2,7 @@ import React from 'react';
 import { createStackNavigator } from 'react-navigation';
 import { Text, View, Image, TouchableHighlight } from 'react-native';
 import { MapView } from 'expo';
-import coordinates from '../coordinates'; 
+import { coordinates } from '../walkdata'; 
 import MapViewDirections from 'react-native-maps-directions';
 
 class WalkMap extends React.Component {
@@ -36,9 +36,9 @@ class WalkMap extends React.Component {
     getWalkCoordinates() {
 
         let walkName = this.props.name; 
-        let folderName = walkName.replace(/ /g,'_').replace(/'/g,'').toLowerCase(); 
-       
-        return coordinates[folderName]; 
+        let machineName = walkName.replace(/ /g,'_').replace(/'/g,'').toLowerCase(); 
+
+        return coordinates[machineName]; 
         
     }
 

@@ -5,6 +5,7 @@ import { MapView , Location, Permissions } from 'expo';
 import MapViewDirections from 'react-native-maps-directions';
 import WaypointInfoBox from './waypoint'; 
 import WalkMap from './walkmap'; 
+import { requireWaypointAudio } from '../walkdata'; 
 
 locationObservable = {}; 
 
@@ -125,6 +126,10 @@ class WalkPage extends React.Component {
         const { navigation } = this.props; 
         const walkName = navigation.getParam('walkName'); 
 
+        let machineName = walkName.replace(/ /g,'_').replace(/'/g,'').toLowerCase(); 
+
+        this.state.waypointAudioAssets = requireWaypointAudio(machineName); 
+
         return (
             <View style={{
                   flex: 1
@@ -136,7 +141,9 @@ class WalkPage extends React.Component {
                     totalNumWaypoints={this.getTotalNumWaypoints}
                     isFirstWaypoint={this.state.isFirstWaypoint}
                 ></WalkMap>
-                {this.state.showButton === 1 ? <WaypointInfoBox directToNextWaypoint={this.directToNextWaypoint}></WaypointInfoBox> : <View></View>}
+                {this.state.showButton === 1 ? <WaypointInfoBox directToNextWaypoint={this.directToNextWaypoint}
+                                                currentWaypoint={this.state.waypointDetails.currentWaypointNum}
+                                                waypointAudio={this.state.waypointAudioAssets}></WaypointInfoBox> : <View></View>}
             </View>
         )
     }

@@ -7,7 +7,7 @@ class WaypointInfoBox extends React.Component {
 
     soundObject; 
 
-    constructor() {
+    constructor(props) {
         super();
  
         if( Platform.OS === 'android' ) {
@@ -43,9 +43,12 @@ class WaypointInfoBox extends React.Component {
     async playWaypointAudio() {
 
         this.soundObject = new Expo.Audio.Sound();
-        
+
+        let waypointNumber = this.props.currentWaypoint + 1; 
+        let waypointAudioKey = 'waypoint_' + waypointNumber; 
+
         try {
-            await this.soundObject.loadAsync(require('../assets/central_london/audio/waypoint_1.mp3'));
+            await this.soundObject.loadAsync(this.props.waypointAudio[waypointAudioKey]);
             await this.soundObject.playAsync();
 
             let onPlaybackStatusUpdate = (status) => {

@@ -1,4 +1,4 @@
-const coordinates = {	
+export const coordinates = {	
 	"central_london": [
 		{latitude:51.500782092628455, longitude:-0.12462615966796875},
 		{latitude:51.506740914237376, longitude:-0.12213067426523594},
@@ -13,4 +13,19 @@ const coordinates = {
 	]
 } 
 
-export default coordinates; 
+export function requireWaypointAudio(walkName) {
+
+	if(walkName === "st_johns_wood") {
+		let waypoint_1 = require('./assets/central_london/audio/waypoint_1.mp3'); 
+		let waypoint_2 = require('./assets/central_london/audio/waypoint_1.mp3'); 
+
+		return {
+			waypoint_1, 
+			waypoint_2
+		}
+	}	
+
+
+
+
+}
