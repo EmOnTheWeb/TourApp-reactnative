@@ -18,8 +18,20 @@ class HomePage extends React.Component {
             <Image
 	            source={item.image}
 	            style={styles.image}
+                resizeMode='cover'
         	/>
             <Text style={styles.descriptionText}>{item.description}</Text>
+            <View style={styles.circleContainer}> 
+                <View style={styles.circle}>
+                    <Text style={styles.circleText}>{item.length}</Text>
+                    <Text style={styles.circleMiniText}>miles</Text>
+                </View>
+                <View style={styles.circle}><Text style={styles.circleText}>{item.time}</Text></View> 
+                <View style={styles.circle}>
+                    <Text style={styles.circleText}>{item.waypoints}</Text>
+                    <Text style={styles.circleMiniText}>waypnts</Text>
+                </View> 
+            </View> 
 	        <TouchableHighlight
 	         	style={styles.button}
 	         	onPress={() => navigator.navigate('Walk', {
@@ -87,6 +99,29 @@ const styles = StyleSheet.create({
     descriptionText: {
         fontSize:15,
         margin:10
+    },
+    circle: {
+        borderWidth: 4, 
+        width: 76,
+        height:76,
+        borderColor:'#A99F96',
+        borderRadius:38,
+        alignItems:'center',
+        justifyContent:'center' 
+    },
+    circleText: {
+        fontSize:20, 
+        fontWeight:'900'
+    },
+    circleMiniText: {
+        fontSize:15,
+        marginTop:-7 
+    },
+    circleContainer: {
+        flexDirection:'row',
+        justifyContent:'space-around', 
+        width: Dimensions.get('window').width,
+        marginBottom:5
     }
 });
 
