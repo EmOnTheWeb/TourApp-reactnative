@@ -13,9 +13,13 @@
 	    },
 	    "android": {
 	       "package": "com.emiliedannenberg.ldnwalks",
+	       "permissions": [
+		      "ACCESS_COARSE_LOCATION",
+		      "ACCESS_FINE_LOCATION"
+		   	],
 	       "config": {
       	       "googleMaps": { "apiKey": "AIzaSyAAJJrT3CACnKvsMwLB8G60QrfQ_yxD-a8" }   
-   		   }
+   		   } 
 	    }
   	}
 }
