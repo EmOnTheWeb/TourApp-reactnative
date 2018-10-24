@@ -161,7 +161,8 @@ class WalkPage extends React.Component {
                 ></WalkMap>
                 {this.state.showButton === 1 ? <WaypointInfoBox directToNextWaypoint={this.directToNextWaypoint}
                                                 currentWaypoint={this.state.waypointDetails.currentWaypointNum}
-                                                waypointData={this.state.waypointData}></WaypointInfoBox> : <View></View>}
+                                                waypointData={this.state.waypointData}
+                                                walkName={machineName}></WaypointInfoBox> : <View></View>}
                 {this.state.showNavigateToStartButton ===1 ? <TouchableHighlight style={styles.circleButton} onPress={()=> this.navigateToStart()}><Text style={styles.circleButtonText}>Go To Start</Text></TouchableHighlight> : <View></View> }
             </View>
         )
