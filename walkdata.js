@@ -9,14 +9,12 @@ export const homepageWalkData = [
 		        },
 		        {
 		            name: 'Central London',
-		            description: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt',
-		            image: require('./assets/imgs/Central-London.png')    
-		        },
-		        {
-		            name: 'St Johns Wood',
-		            description: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt',
-		            image: require('./assets/imgs/St-Johns-Wood.png')
-		        } 
+		            description: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore',
+		            image: require('./assets/imgs/Central-London.png'),
+		            length: 'tbd',
+		            time:'tbd',
+		            waypoints:'tbd' 
+		        }
 			]; 
 
 
