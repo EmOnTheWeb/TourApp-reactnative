@@ -145,7 +145,7 @@ class WalkPage extends React.Component {
 
         let machineName = walkName.replace(/ /g,'_').replace(/'/g,'').toLowerCase(); 
 
-        this.state.waypointAudioAssets = requireWaypointAudio(machineName); 
+        // this.state.waypointAudioAssets = requireWaypointAudio(machineName); 
         this.state.waypointData = requireWaypointImgs(machineName); 
 
         return (
@@ -161,7 +161,6 @@ class WalkPage extends React.Component {
                 ></WalkMap>
                 {this.state.showButton === 1 ? <WaypointInfoBox directToNextWaypoint={this.directToNextWaypoint}
                                                 currentWaypoint={this.state.waypointDetails.currentWaypointNum}
-                                                waypointAudio={this.state.waypointAudioAssets}
                                                 waypointData={this.state.waypointData}></WaypointInfoBox> : <View></View>}
                 {this.state.showNavigateToStartButton ===1 ? <TouchableHighlight style={styles.circleButton} onPress={()=> this.navigateToStart()}><Text style={styles.circleButtonText}>Go To Start</Text></TouchableHighlight> : <View></View> }
             </View>
