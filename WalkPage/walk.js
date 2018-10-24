@@ -59,14 +59,12 @@ class WalkPage extends React.Component {
 
                     if(this.isWithinRadius({mylat:latitude,mylng:longitude})) {
                         this.setState({showButton:1}); 
-                        this.setState({showNavigateToStartButton:0}); 
+                        if(this.state.isFirstWaypoint) { this.setState({showNavigateToStartButton:0}); } 
                         
                     } 
                     else {
 
-                        if(this.state.isFirstWaypoint) { 
-                            this.setState({showNavigateToStartButton:1}); 
-                        }
+                        if(this.state.isFirstWaypoint) { this.setState({showNavigateToStartButton:1}); }
                         this.setState({showButton:0}); 
                     }
                 }
@@ -129,12 +127,15 @@ class WalkPage extends React.Component {
 
     navigateToStart() {
 
+        let latLngStr = this.state.waypointDetails.currentWaypointLat + ',' + this.state.waypointDetails.currentWaypointLng; 
+        let url; 
         if( Platform.OS === 'android' ) {
-            Linking.openURL('google.navigation:q=100+101'); 
+            url = 'google.navigation:q=' + latLngStr;      
         } 
         else {
-
+            url = 'http://maps.apple.com/?daddr=' + latLngStr;  
         }
+        Linking.openUrl(url); 
     }
 
     render () {
