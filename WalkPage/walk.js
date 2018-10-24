@@ -130,12 +130,12 @@ class WalkPage extends React.Component {
         let latLngStr = this.state.waypointDetails.currentWaypointLat + ',' + this.state.waypointDetails.currentWaypointLng; 
         let url; 
         if( Platform.OS === 'android' ) {
-            url = 'google.navigation:q=' + latLngStr;      
+            url = 'google.navigation:q=' + latLngStr;     
         } 
         else {
             url = 'http://maps.apple.com/?daddr=' + latLngStr;  
         }
-        Linking.openUrl(url); 
+        Linking.openURL(url); 
     }
 
     render () {
