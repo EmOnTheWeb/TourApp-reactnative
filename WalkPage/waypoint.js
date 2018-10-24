@@ -5,6 +5,7 @@ import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
 class WaypointInfoBox extends React.Component {
 
     soundObject; 
+    remoteUrl = 'http://www.codelcoecuador.com/waypoints/'; 
 
     constructor(props) {
         super();
@@ -45,9 +46,10 @@ class WaypointInfoBox extends React.Component {
     async playWaypointAudio() {
 
         this.soundObject = new Expo.Audio.Sound();
-
+        let audioResourceUrl = this.remoteUrl + this.props.walkName + '/audio/' + this.state.waypointKey + '.mp3'; 
+        
         try {
-            await this.soundObject.loadAsync(this.props.waypointAudio[this.state.waypointKey]);
+            await this.soundObject.loadAsync({ uri: audioResourceUrl });
             await this.soundObject.playAsync();
 
             let onPlaybackStatusUpdate = (status) => {
@@ -61,6 +63,7 @@ class WaypointInfoBox extends React.Component {
           
         } catch (error) {
             console.log(error); 
+            alert('Please check you are connected to the internet'); 
         }
     }
 
@@ -94,13 +97,13 @@ class WaypointInfoBox extends React.Component {
     }
 
     renderWaypointBoxContents() {
-
+        let imgSrc = this.remoteUrl + this.props.walkName + /imgs/ + this.props.waypointData[this.state.waypointKey].img_src; 
         return <View style={this.waypointBoxStyles()}>
                 <Text style={styles.waypointText}>{this.props.waypointData[this.state.waypointKey].title}</Text>
                 <View style={{flexDirection:'row', justifyContent:'space-between'}}>
                     <Image
                         style={styles.thumbImg}
-                        source={this.props.waypointData[this.state.waypointKey].img_src}
+                        source={{uri:imgSrc}}
                         resizeMode='contain'
                     /> 
                     <View style={styles.audioControls}> 
