@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from 'react-navigation';
-import { Text, View, Image, TouchableHighlight } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableHighlight, Linking, Platform } from 'react-native';
 import { MapView , Location, Permissions } from 'expo';
 import MapViewDirections from 'react-native-maps-directions';
 import WaypointInfoBox from './waypoint'; 
@@ -14,6 +14,7 @@ class WalkPage extends React.Component {
     state = {
         myPositionMarker: [], //make array with single coordinate object so you can map over it in render function
         showButton: 0,
+        showNavigateToStartButton:0,
         currentSegment:0,
         isFirstWaypoint:true //flag to make sure u get origin of the first segment 
     }
@@ -57,10 +58,15 @@ class WalkPage extends React.Component {
                     this.setState({myPositionMarker}); 
 
                     if(this.isWithinRadius({mylat:latitude,mylng:longitude})) {
-                        this.setState({showButton:1})
+                        this.setState({showButton:1}); 
+                        this.setState({showNavigateToStartButton:0}); 
                         
                     } 
                     else {
+
+                        if(this.state.isFirstWaypoint) { 
+                            this.setState({showNavigateToStartButton:1}); 
+                        }
                         this.setState({showButton:0}); 
                     }
                 }
@@ -121,6 +127,16 @@ class WalkPage extends React.Component {
         this.setState({showButton:0}); 
     }
 
+    navigateToStart() {
+
+        if( Platform.OS === 'android' ) {
+            Linking.openURL('google.navigation:q=100+101'); 
+        } 
+        else {
+
+        }
+    }
+
     render () {
 
         const { navigation } = this.props; 
@@ -146,9 +162,30 @@ class WalkPage extends React.Component {
                                                 currentWaypoint={this.state.waypointDetails.currentWaypointNum}
                                                 waypointAudio={this.state.waypointAudioAssets}
                                                 waypointData={this.state.waypointData}></WaypointInfoBox> : <View></View>}
+                {this.state.showNavigateToStartButton ===1 ? <TouchableHighlight style={styles.circleButton} onPress={()=> this.navigateToStart()}><Text style={styles.circleButtonText}>Go To Start</Text></TouchableHighlight> : <View></View> }
             </View>
         )
     }
 }
+
+const styles = StyleSheet.create({
+    circleButton: {
+        width: 76,
+        height:76,
+        borderRadius:38, 
+        backgroundColor:'#b84c5c',
+        alignItems:'center',
+        justifyContent:'center',
+        position:'absolute',
+        right:10,
+        bottom:10
+    },
+    circleButtonText: {
+        color:'white', 
+        width:'70%', 
+        fontSize:15,
+        textAlign:'center'
+    } 
+});
 
 export default WalkPage; 

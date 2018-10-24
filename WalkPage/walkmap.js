@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from 'react-navigation';
-import { Text, View, Image, TouchableHighlight } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableHighlight } from 'react-native';
 import { MapView } from 'expo';
 import { coordinates } from '../walkdata'; 
 import MapViewDirections from 'react-native-maps-directions';
@@ -81,17 +81,39 @@ class WalkMap extends React.Component {
                 }}
             > 
                 {this.state.markers.map((marker,i) => {
-
+                  
                     const coordinates = {
                         latitude:marker.latitude,
                         longitude:marker.longitude
                     }
-                    return (
-                        <MapView.Marker
-                            key={i}
-                            coordinate={coordinates}
-                        />
-                    ); 
+
+                    if(i===0) {
+                        return (
+                            <MapView.Marker
+                                key={i}
+                                coordinate={coordinates}
+                                image={require('../assets/map_icons/Start_Flag.png')}
+                            />
+                        ); 
+                    }
+                    else if(i===this.state.markers.length -1) {
+                        return (
+                            <MapView.Marker
+                                key={i}
+                                coordinate={coordinates}
+                                image={require('../assets/map_icons/Finish_Flag.png')}
+                            />
+                        ); 
+                    }
+
+                    else {
+                        return (
+                            <MapView.Marker
+                                key={i}
+                                coordinate={coordinates}
+                            />
+                        ); 
+                    }
                 })}
 
                 {this.props.position.map((myPosition,i) => {  
@@ -100,9 +122,12 @@ class WalkMap extends React.Component {
                             key="myLocation"
                             ref={marker => { this.marker = marker }}
                             coordinate={myPosition}
-                            image={require('../assets/imgs/Walk_Icon.png')}
                             style={{zIndex:2}}
-                        />
+                        >
+                            <View style={styles.radius}> 
+                                <View style={styles.marker} />
+                            </View>
+                        </MapView.Marker.Animated>
                     ); 
                 })} 
                 <MapViewDirections
@@ -117,5 +142,28 @@ class WalkMap extends React.Component {
         );
     }
 }
+
+const styles = StyleSheet.create({
+    radius: {
+        height:50,
+        width:50,
+        borderRadius:50/2, 
+        backgroundColor:'rgba(0,112,255,0.1)',
+        borderWidth:1,
+        borderColor:'rgba(0,112,255,0.3)',
+        alignItems:'center',
+        justifyContent:'center',
+        overflow:'hidden'
+    }, 
+    marker: {
+        height:20,
+        width:20,
+        borderWidth:3,
+        borderColor:'white',
+        borderRadius:20/2,
+        backgroundColor:'#007AFF',
+        overflow:'hidden'
+    } 
+});
 
 export default WalkMap; 
