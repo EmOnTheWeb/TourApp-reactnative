@@ -45,8 +45,8 @@ class WalkPage extends React.Component {
 
                 let options = {
                     enableHighAccuracy: true,
-                    timeInterval: 300, 
-                    distanceInterval: 2
+                    timeInterval: 200, 
+                    distanceInterval: 1
                 }
 
                 let callback = (obj) => {
