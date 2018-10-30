@@ -93,6 +93,7 @@ class WalkMap extends React.Component {
                                 key={i}
                                 coordinate={coordinates}
                                 image={require('../assets/map_icons/Start_Flag.png')}
+                                anchor={{x:0,y:1}}
                             />
                         ); 
                     }
@@ -102,6 +103,7 @@ class WalkMap extends React.Component {
                                 key={i}
                                 coordinate={coordinates}
                                 image={require('../assets/map_icons/Finish_Flag.png')}
+                                anchor={{x:0,y:1}}
                             />
                         ); 
                     }
@@ -116,13 +118,15 @@ class WalkMap extends React.Component {
                     }
                 })}
 
-                {this.props.position.map((myPosition,i) => {  
+                {this.props.position.map((myPosition,i) => { 
+                    console.log(myPosition);  
                     return (
                         <MapView.Marker.Animated
                             key="myLocation"
                             ref={marker => { this.marker = marker }}
                             coordinate={myPosition}
                             style={{zIndex:2}}
+                            anchor={{x:0.5,y:0.5}}
                         >
                             <View style={styles.radius}> 
                                 <View style={styles.marker} />
