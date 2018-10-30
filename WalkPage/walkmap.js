@@ -94,6 +94,7 @@ class WalkMap extends React.Component {
                                 coordinate={coordinates}
                                 image={require('../assets/map_icons/Start_Flag.png')}
                                 anchor={{x:0,y:1}}
+                                centerOffset={{x:0.5,y:-0.5}}
                             />
                         ); 
                     }
@@ -104,6 +105,7 @@ class WalkMap extends React.Component {
                                 coordinate={coordinates}
                                 image={require('../assets/map_icons/Finish_Flag.png')}
                                 anchor={{x:0,y:1}}
+                                centerOffset={{x:0.5,y:-0.5}}
                             />
                         ); 
                     }
