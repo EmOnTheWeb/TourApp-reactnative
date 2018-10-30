@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableHighlight, Button, LayoutAnimation, UIManager, Platform, Dimensions  } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Image, TouchableHighlight, Button, LayoutAnimation, UIManager, Platform, Dimensions  } from 'react-native';
 import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
 
 class WaypointInfoBox extends React.Component {
@@ -99,7 +99,9 @@ class WaypointInfoBox extends React.Component {
     renderWaypointBoxContents() {
         let imgSrc = this.remoteUrl + this.props.walkName + /imgs/ + this.props.waypointData[this.state.waypointKey].img_src; 
         return <View style={this.waypointBoxStyles()}>
-                <Text style={styles.waypointText}>{this.props.waypointData[this.state.waypointKey].title}</Text>
+                <TextInput style={styles.waypointText}
+                       editable={false}>{this.props.waypointData[this.state.waypointKey].title}
+                </TextInput>
                 <View style={{flexDirection:'row', justifyContent:'space-between'}}>
                     <Image
                         style={styles.thumbImg}
