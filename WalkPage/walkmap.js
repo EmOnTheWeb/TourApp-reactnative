@@ -119,7 +119,7 @@ class WalkMap extends React.Component {
                 })}
 
                 {this.props.position.map((myPosition,i) => { 
-                    console.log(myPosition);  
+                  
                     return (
                         <MapView.Marker.Animated
                             key="myLocation"

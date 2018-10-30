@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from 'react-navigation'; 
-import { StyleSheet, Text, View, Image, TouchableHighlight, FlatList, Dimensions } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Image, TouchableHighlight, FlatList, Dimensions } from 'react-native';
 import { homepageWalkData } from '../walkdata'; 
 
 
@@ -14,7 +14,9 @@ class HomePage extends React.Component {
     renderRow ({ item }) {
         return (
         <View style={styles.container}>
-            <Text style={styles.titleText}>{item.name}</Text>
+            <TextInput style={styles.titleText}
+                       editable={false}>{item.name}
+            </TextInput>
             <Image
 	            source={item.image}
 	            style={styles.image}
@@ -29,7 +31,7 @@ class HomePage extends React.Component {
                 <View style={styles.circle}><Text style={styles.circleText}>{item.time}</Text></View> 
                 <View style={styles.circle}>
                     <Text style={styles.circleText}>{item.waypoints}</Text>
-                    <Text style={styles.circleMiniText}>waypnts</Text>
+                    <Text style={styles.circleMiniText}>audio</Text>
                 </View> 
             </View> 
 	        <TouchableHighlight
@@ -88,12 +90,9 @@ const styles = StyleSheet.create({
         fontSize:20,
         width:'95%',
         marginBottom:5, 
-        borderColor:'#A99F96',
-        borderWidth:4,
         borderRadius:5,
-        borderTopWidth:0,
-        borderRightWidth:0,
-        borderLeftWidth:0,
+        borderBottomWidth:4,
+        borderBottomColor:'#A99F96',
         color:'black'
     },
     descriptionText: {
