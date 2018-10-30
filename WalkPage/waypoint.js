@@ -100,7 +100,8 @@ class WaypointInfoBox extends React.Component {
         let imgSrc = this.remoteUrl + this.props.walkName + /imgs/ + this.props.waypointData[this.state.waypointKey].img_src; 
         return <View style={this.waypointBoxStyles()}>
                 <TextInput style={styles.waypointText}
-                       editable={false}>{this.props.waypointData[this.state.waypointKey].title}
+                       editable={false}
+                       underlineColorAndroid="transparent">{this.props.waypointData[this.state.waypointKey].title}
                 </TextInput>
                 <View style={{flexDirection:'row', justifyContent:'space-between'}}>
                     <Image

@@ -15,7 +15,8 @@ class HomePage extends React.Component {
         return (
         <View style={styles.container}>
             <TextInput style={styles.titleText}
-                       editable={false}>{item.name}
+                       editable={false}
+                       underlineColorAndroid="transparent">{item.name}
             </TextInput>
             <Image
 	            source={item.image}
